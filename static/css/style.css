@@ -32854,6 +32854,19 @@ ul.flexbox {
   background-repeat: no-repeat;
   z-index: 0; }
 
+.bg-img::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px); /* Adjust the blur amount here */
+    z-index: -1;
+}
+
 .box.bg-img, .box .bg-img {
   border-radius: 15px; }
 

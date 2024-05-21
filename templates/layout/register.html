@@ -34,12 +34,12 @@
                                 <p class="mb-0">Register a new membership</p>
                             </div>
                             <div class="p-40">
-                                <form action="index.html" method="post">
+                                <form action="/register" method="post">
                                     <div class="form-group">
                                         <div class="input-group mb-3">
                                             <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
                                             <input type="text" class="form-control ps-15 bg-transparent"
-                                                placeholder="Full Name">
+                                                placeholder="Full Name" name="fullname">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -47,14 +47,14 @@
                                             <span class="input-group-text bg-transparent"><i
                                                     class="ti-email"></i></span>
                                             <input type="email" class="form-control ps-15 bg-transparent"
-                                                placeholder="Email">
+                                                placeholder="Email" name="email">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="input-group mb-3">
                                             <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
                                             <input type="password" class="form-control ps-15 bg-transparent"
-                                                placeholder="Password">
+                                                placeholder="Password" name="password">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -80,7 +80,7 @@
                                     </div>
                                 </form>
                                 <div class="text-center">
-                                    <p class="mt-15 mb-0">Already have an account?<a href="auth_login.html"
+                                    <p class="mt-15 mb-0">Already have an account?<a href="/login"
                                             class="text-danger ms-5"> Sign In</a></p>
                                 </div>
                             </div>

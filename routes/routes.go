@@ -41,4 +41,12 @@ func SetupRoutes(app *fiber.App, db *gorm.DB) {
 	app.Post("/register", func(c *fiber.Ctx) error {
 		return controllers.RegisterPutHandler(c, db)
 	})
+
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.Render("layout/index", fiber.Map{})
+	})
+
+	app.Get("/dashboard", func(c *fiber.Ctx) error {
+		return c.Render("layout/dashboard", fiber.Map{})
+	})
 }

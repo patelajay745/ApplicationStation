@@ -43,7 +43,7 @@ func SetupRoutes(app *fiber.App, db *gorm.DB) {
 	})
 
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.Render("layout/index", fiber.Map{})
+		return c.Redirect("/login")
 	})
 
 	app.Get("/dashboard", func(c *fiber.Ctx) error {

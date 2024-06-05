@@ -2,9 +2,9 @@ package models
 
 type User struct {
 	CustomModel
-	FullName string `gorm:"column:fullname,omitempty"`
-	Email    string `gorm:"column:email"`
-	Password string `gorm:"column:password"`
+	FullName string `json:"fullname,omitempty" gorm:"column:fullname"`
+	Email    string `json:"email" gorm:"column:email"`
+	Password string `json:"password" gorm:"column:password"`
 }
 
 type CustomModel struct {

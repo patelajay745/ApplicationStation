@@ -18,6 +18,7 @@ func main() {
 	// Initialize database connection
 	db := config.Connect()
 	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.Application{})
 
 	app := fiber.New(fiber.Config{
 		Views: html.New("templates", ".html"),

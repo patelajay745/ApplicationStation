@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	github.com/alexedwards/scs/v2 v2.8.0 // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/gofiber/fiber v1.14.6 // indirect
 	github.com/gofiber/template v1.8.3 // indirect

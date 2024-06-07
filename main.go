@@ -3,40 +3,47 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"os"
-	"time"
 
-	"github.com/alexedwards/scs/v2"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/gofiber/template/html/v2"
 	"github.com/patelajay745/ApplicationStation/config"
-	"github.com/patelajay745/ApplicationStation/routes"
-
 	"github.com/patelajay745/ApplicationStation/models"
+	"github.com/patelajay745/ApplicationStation/routes"
 )
 
-var sessionManager *scs.SessionManager
+var store *session.Store
 
 func main() {
+
+	// Initialize session store
+	store = session.New(session.Config{
+		CookieHTTPOnly: true,
+		CookieSecure:   true,
+		CookieSameSite: "Lax",
+	})
 
 	// Initialize database connection
 	db := config.Connect()
 	db.AutoMigrate(&models.User{})
 	db.AutoMigrate(&models.Application{})
 
-	// Initialize session manager
-	sessionManager = scs.New()
-	sessionManager.Lifetime = 24 * time.Hour
-	sessionManager.Cookie.Persist = true
-	sessionManager.Cookie.SameSite = http.SameSiteLaxMode
-	sessionManager.Cookie.Secure = true
-
 	app := fiber.New(fiber.Config{
 		Views: html.New("templates", ".html"),
 	})
 
-	routes.SetupRoutes(app, db)
+	// Middleware to manage session
+	app.Use(func(c *fiber.Ctx) error {
+		sess, err := store.Get(c)
+		if err != nil {
+			return err
+		}
+		c.Locals("session", sess)
+		return c.Next()
+	})
+
+	routes.SetupRoutes(app, db, store)
 
 	app.Static("/", "static")
 

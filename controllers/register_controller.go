@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/patelajay745/ApplicationStation/models"
 	"github.com/patelajay745/ApplicationStation/utils"
 	"gorm.io/gorm"
@@ -30,7 +31,7 @@ func RegisterPutHandler(c *fiber.Ctx, db *gorm.DB) error {
 	return c.Redirect("/login?success=true", fiber.StatusSeeOther)
 }
 
-func LoginPutHandler(c *fiber.Ctx, db *gorm.DB) error {
+func LoginPutHandler(c *fiber.Ctx, db *gorm.DB, store *session.Store) error {
 	var userInput models.User
 	var existingUser models.User
 
@@ -54,5 +55,34 @@ func LoginPutHandler(c *fiber.Ctx, db *gorm.DB) error {
 
 	}
 
+	sess, err := store.Get(c)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString("Failed to get session")
+	}
+
+	sess.Set("authenticated", true)
+	sess.Set("userID", existingUser.ID)
+
+	if err := sess.Save(); err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString("Failed to save session")
+	}
+
+	fmt.Println("User authenticated successfully")
+
 	return c.Redirect("/dashboard", fiber.StatusSeeOther)
+}
+
+func LogoutHandler(c *fiber.Ctx, store *session.Store) error {
+	sess, err := store.Get(c)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString("Failed to get session")
+	}
+
+	// Destroy the session
+	if err := sess.Destroy(); err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString("Failed to destroy session")
+	}
+
+	// Redirect to login page
+	return c.Redirect("/")
 }

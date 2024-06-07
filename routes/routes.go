@@ -2,12 +2,14 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/patelajay745/ApplicationStation/controllers"
+	"github.com/patelajay745/ApplicationStation/middleware"
 	"gorm.io/gorm"
 )
 
 // SetupRoutes initializes all routes for the application
-func SetupRoutes(app *fiber.App, db *gorm.DB) {
+func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 	app.Get("/register", func(c *fiber.Ctx) error {
 		errorMessage := c.Query(("error"))
 		var errorMsg string
@@ -34,7 +36,7 @@ func SetupRoutes(app *fiber.App, db *gorm.DB) {
 
 	app.Post("/login", func(c *fiber.Ctx) error {
 
-		return controllers.LoginPutHandler(c, db)
+		return controllers.LoginPutHandler(c, db, store)
 
 	})
 
@@ -42,8 +44,19 @@ func SetupRoutes(app *fiber.App, db *gorm.DB) {
 		return controllers.RegisterPutHandler(c, db)
 	})
 
+	app.Get("/logout", func(c *fiber.Ctx) error {
+		return controllers.LogoutHandler(c, store)
+	})
+
+	// Middleware to check if the user is logged in
+	app.Use("/", middleware.AuthRequired(store))
+
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.Redirect("/login")
+		sess := c.Locals("session").(*session.Session)
+		if sess.Get("authenticated") != true {
+			return c.Redirect("/login")
+		}
+		return c.Redirect("/dashboard")
 	})
 
 	app.Get("/dashboard", func(c *fiber.Ctx) error {

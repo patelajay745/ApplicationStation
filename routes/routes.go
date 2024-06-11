@@ -4,7 +4,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/patelajay745/ApplicationStation/controllers"
-	"github.com/patelajay745/ApplicationStation/middleware"
 	"gorm.io/gorm"
 )
 
@@ -49,7 +48,7 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 	})
 
 	// Middleware to check if the user is logged in
-	app.Use("/", middleware.AuthRequired(store))
+	//app.Use("/", middleware.AuthRequired(store))
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		sess := c.Locals("session").(*session.Session)
@@ -60,6 +59,10 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 	})
 
 	app.Get("/dashboard", func(c *fiber.Ctx) error {
+		// sess := c.Locals("session").(*session.Session)
+		// if sess.Get("authenticated") != true {
+		// 	return c.Redirect("/login")
+		// }
 		return c.Render("layout/dashboard", fiber.Map{})
 	})
 }

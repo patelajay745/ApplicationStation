@@ -17,7 +17,7 @@ var store *session.Store
 
 func main() {
 
-	// Initialize session store
+	// Initialize session store 
 	store = session.New(session.Config{
 		CookieHTTPOnly: true,
 		CookieSecure:   true,

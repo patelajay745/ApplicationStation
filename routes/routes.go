@@ -63,6 +63,6 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 		// if sess.Get("authenticated") != true {
 		// 	return c.Redirect("/login")
 		// }
-		return c.Render("layout/dashboard", fiber.Map{})
+		return c.Render("layout/base", fiber.Map{})
 	})
 }

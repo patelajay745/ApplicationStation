@@ -1,0 +1,69 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Output of the build process
+build/
+bin/
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+
+# Compiled Object files and Shared Object files
+*.o
+*.a
+*.so
+
+# Go vendor directory
+vendor/
+
+# Dependency directories
+dep/
+Godeps/
+
+# Go workspace file
+go.work
+go.work.sum
+
+# Project local and environment-specific configuration files
+.env
+.env.local
+.env.test
+.env.production
+
+# IDE/editor directories and files
+.vscode/
+.idea/
+*.tmproj
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Node modules for frontend dependencies
+node_modules/
+
+# Static assets
+/static/*
+
+# Fiber specific temp files
+/tmp/*
+
+# Coverage reports
+coverage.out
+.coverage/
+*.cover
+
+# Fiber built files
+fiber.*
+

@@ -67,8 +67,8 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 	})
 	// Add Application form route
 	app.Get("/add_application", func(c *fiber.Ctx) error {
-		return c.Render("layout/base", fiber.Map{
+		return c.Render("layout/add_application", fiber.Map{
 			"Title": "Add Application | Job Application Tracker",
-		})
+		}, "layout/main")
 	})
 }

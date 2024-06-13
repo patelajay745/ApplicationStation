@@ -63,7 +63,7 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 		// if sess.Get("authenticated") != true {
 		// 	return c.Redirect("/login")
 		// }
-		return c.Render("layout/dashboard", fiber.Map{})
+		return c.Render("layout/dashboard", fiber.Map{}, "layout/main")
 	})
 	// Add Application form route
 	app.Get("/add_application", func(c *fiber.Ctx) error {

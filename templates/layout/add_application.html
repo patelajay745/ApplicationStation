@@ -1,10 +1,10 @@
 {{template "partials/header" .}}
-{{template "partials/main_sidebar" .}} 
+{{template "partials/main_sidebar" .}}
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <div class="container-full">
         <section class="content">
-			<div class="row">
+            <div class="row">
                 <div class="col-lg-6 col-12">
                     <div class="box">
                         <div class="box-header with-border">
@@ -13,19 +13,22 @@
                         <!-- /.box-header -->
                         <form class="form" action="/add_application" method="post">
                             <div class="box-body">
-                                <h4 class="box-title text-info mb-0"><i class="ti-user me-15"></i> Application Details</h4>
+                                <h4 class="box-title text-info mb-0"><i class="ti-user me-15"></i> Application Details
+                                </h4>
                                 <hr class="my-15">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">Position</label>
-                                            <input type="text" class="form-control" placeholder="Position" name="position">
+                                            <input type="text" class="form-control" placeholder="Position"
+                                                name="position">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">Company</label>
-                                            <input type="text" class="form-control" placeholder="Company" name="company">
+                                            <input type="text" class="form-control" placeholder="Company"
+                                                name="company">
                                         </div>
                                     </div>
                                 </div>
@@ -39,13 +42,18 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-label">Location</label>
-                                            <input type="text" class="form-control" placeholder="Location" name="location">
+                                            <input type="text" class="form-control" placeholder="Location"
+                                                name="location">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">Status</label>
-                                    <input type="text" class="form-control" placeholder="Status" name="status">
+                                    <label class="form-label">Work Type</label>
+                                    <select class="form-select" name="work_type">
+                                        <option>Work from home</option>
+                                        <option>Office</option>
+                                        <option>Hybrid</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Note</label>
@@ -55,20 +63,16 @@
                             <!-- /.box-body -->
                             <div class="box-footer text-end">
                                 <button type="button" class="btn btn-warning me-1">
-                                    <i class="ti-trash"></i> Cancel
-                                </button>
+                                    <i class="ti-trash"></i> Cancel </button>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="ti-save-alt"></i> Save
-                                </button>
-                            </div>  
+                                    <i class="ti-save-alt"></i> Save </button>
+                            </div>
                         </form>
                     </div>
-                    <!-- /.box -->            
+                    <!-- /.box -->
                 </div>
             </div>
         </section>
     </div>
-</div>  
-
+</div>
 {{template "partials/footer" .}}
-

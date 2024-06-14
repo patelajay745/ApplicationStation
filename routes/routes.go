@@ -71,4 +71,9 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 			"Title": "Add Application | Job Application Tracker",
 		}, "layout/main")
 	})
+
+	app.Post("/add_application", func(c *fiber.Ctx) error {
+		
+		return controllers.LoginPutHandler(c, db, store)
+	})
 }

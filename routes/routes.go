@@ -73,7 +73,7 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 	})
 
 	app.Post("/add_application", func(c *fiber.Ctx) error {
-		
-		return controllers.LoginPutHandler(c, db, store)
+
+		return controllers.AddApplicationHandler(c, db, store)
 	})
 }

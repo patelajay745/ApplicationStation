@@ -11,5 +11,5 @@ type Application struct {
 	Note        string    `json:"note,omitempty" gorm:"column:note"`
 	Status      string    `json:"status,omitempty" gorm:"column:status"`
 	AppliedDate time.Time `json:"applied_date" gorm:"column:applied_date"`
-	WorkType    string    `json:"work_type" gorm:"column:work_type"`
+	WorkType    string    `json:"worktype" gorm:"column:worktype"`
 }

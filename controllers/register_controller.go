@@ -3,23 +3,24 @@ package controllers
 import (
 	"fmt"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/session"
+	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/middleware/session"
 	"github.com/patelajay745/ApplicationStation/models"
 	"github.com/patelajay745/ApplicationStation/utils"
 	"gorm.io/gorm"
 )
 
-func RegisterPutHandler(c *fiber.Ctx, db *gorm.DB) error {
+func RegisterPutHandler(c fiber.Ctx, db *gorm.DB) error {
 	var newUser models.User
 
-	if err := c.BodyParser(&newUser); err != nil {
+	
+	if err := c.JSON(&newUser); err != nil {
 		return err
 	}
 
 	var exisitingUser models.User
 	if err := db.Where("email=?", newUser.Email).First(&exisitingUser).Error; err == nil {
-		return c.Redirect("/register?error=email_exists")
+		return c.Redirect().To("/register?error=email_exists")
 	}
 
 	newUser.Password, _ = utils.HashPassword(newUser.Password)
@@ -28,14 +29,14 @@ func RegisterPutHandler(c *fiber.Ctx, db *gorm.DB) error {
 		return err
 	}
 
-	return c.Redirect("/login?success=true", fiber.StatusSeeOther)
+	return c.Redirect().To("/login?success=true")
 }
 
-func LoginPutHandler(c *fiber.Ctx, db *gorm.DB, store *session.Store) error {
+func LoginPutHandler(c fiber.Ctx, db *gorm.DB, store *session.Store) error {
 	var userInput models.User
 	var existingUser models.User
 
-	if err := c.BodyParser(&userInput); err != nil {
+	if err := c.JSON(&userInput); err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString("Failed to parse request body")
 	}
 
@@ -43,7 +44,7 @@ func LoginPutHandler(c *fiber.Ctx, db *gorm.DB, store *session.Store) error {
 	if err := db.Where("email = ?", userInput.Email).First(&existingUser).Error; err != nil {
 		// Redirect to login with error message if user not found
 		fmt.Println("email not found")
-		return c.Redirect("/login?error=wrong_credentials", fiber.StatusSeeOther)
+		return c.Redirect().To("/login?error=wrong_credentials")
 
 	}
 
@@ -51,7 +52,7 @@ func LoginPutHandler(c *fiber.Ctx, db *gorm.DB, store *session.Store) error {
 	if !utils.CheckPasswordHash(userInput.Password, existingUser.Password) {
 		// Redirect to login with error message if password is incorrect
 		fmt.Println("password not match")
-		return c.Redirect("/login?error=wrong_credentials", fiber.StatusSeeOther)
+		return c.Redirect().To("/login?error=wrong_credentials" )
 
 	}
 
@@ -69,10 +70,10 @@ func LoginPutHandler(c *fiber.Ctx, db *gorm.DB, store *session.Store) error {
 
 	fmt.Println("User authenticated successfully")
 
-	return c.Redirect("/dashboard", fiber.StatusSeeOther)
+	return c.Redirect().To("/dashboard")
 }
 
-func LogoutHandler(c *fiber.Ctx, store *session.Store) error {
+func LogoutHandler(c fiber.Ctx, store *session.Store) error {
 	sess, err := store.Get(c)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).SendString("Failed to get session")
@@ -84,5 +85,5 @@ func LogoutHandler(c *fiber.Ctx, store *session.Store) error {
 	}
 
 	// Redirect to login page
-	return c.Redirect("/")
+	return c.Redirect().To("/")
 }

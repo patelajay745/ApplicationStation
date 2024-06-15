@@ -5,19 +5,21 @@ import (
 	"log"
 	"os"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/session"
+	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v3/middleware/session"
 	"github.com/gofiber/template/html/v2"
 	"github.com/patelajay745/ApplicationStation/config"
 	"github.com/patelajay745/ApplicationStation/models"
 	"github.com/patelajay745/ApplicationStation/routes"
 )
 
-var store *session.Store
+
 
 func main() {
 
-	// Initialize session store 
+	store := session.New()
+
+	// Initialize session store
 	store = session.New(session.Config{
 		CookieHTTPOnly: true,
 		CookieSecure:   true,
@@ -34,12 +36,12 @@ func main() {
 	})
 
 	// Middleware to manage session
-	app.Use(func(c *fiber.Ctx) error {
+	app.Use(func(c fiber.Ctx) error {
 		sess, err := store.Get(c)
 		if err != nil {
 			return err
 		}
-		c.Locals("session", sess)
+		c.Locals("session",sess)
 		return c.Next()
 	})
 

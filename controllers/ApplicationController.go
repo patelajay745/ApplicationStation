@@ -27,5 +27,5 @@ func AddApplicationHandler(c fiber.Ctx, db *gorm.DB, store *session.Store) error
 	}
 
 	// return c.Redirect("/dashboard", fiber.StatusSeeOther)
-	return c.Redirect().To("/dashboard")
+	return c.Redirect().With("status", "Application Added").To("/dashboard")
 }

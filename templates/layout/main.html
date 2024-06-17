@@ -1,41 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <link rel="icon" href="/images/favicon.ico" />
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="/images/favicon.ico" />
 
-        <title>Dashboard | Job Application Tracker</title>
+    <title>Dashboard | Job Application Tracker</title>
 
-        <!-- Vendors Style-->
-        <link rel="stylesheet" href="css/vendors_css.css" />
+    <!-- Vendors Style-->
+    <link rel="stylesheet" href="css/vendors_css.css" />
 
-        <!-- Style-->
-        <link rel="stylesheet" href="css/style.css" />
-        <link rel="stylesheet" href="css/skin_color.css" />
-    </head>
+    <!-- Style-->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/skin_color.css" />
+  </head>
 
-    <body class="hold-transition light-skin sidebar-mini theme-primary fixed">
-        {{embed}}
+  <body class="hold-transition light-skin sidebar-mini theme-primary fixed">
+    {{embed}}
 
-        <!-- Vendor JS -->
-        <script src="/js/vendors.min.js"></script>
-        <script src="/js/pages/chat-popup.js"></script>
-        <script src="/assets/icons/feather-icons/feather.min.js"></script>
+    <script>
+      // JavaScript to hide the alert after 3 seconds
+      setTimeout(function () {
+        var alert = document.getElementById("myalert");
+        if (alert) {
+          alert.style.display = "none";
+        }
+      }, 5000); // 3000 milliseconds = 3 seconds
+    </script>
 
-        <script src="/assets/vendor_components/apexcharts-bundle/dist/apexcharts.js"></script>
-        <script src="/assets/vendor_components/moment/min/moment.min.js"></script>
-        <script src="/assets/vendor_components/fullcalendar/fullcalendar.js"></script>
-        <script src="/assets/vendor_components/datatable/datatables.min.js"></script>
+    <!-- Vendor JS -->
+    <script src="/js/vendors.min.js"></script>
+    <script src="/js/pages/chat-popup.js"></script>
+    <script src="/assets/icons/feather-icons/feather.min.js"></script>
 
-        <!-- Joblly App -->
-        <script src="/js/template.js"></script>
-        <script src="/js/pages/dashboard.js"></script>
-        <script src="/js/pages/calendar-dash.js"></script>
+    <script src="/assets/vendor_components/apexcharts-bundle/dist/apexcharts.js"></script>
+    <script src="/assets/vendor_components/moment/min/moment.min.js"></script>
+    <script src="/assets/vendor_components/fullcalendar/fullcalendar.js"></script>
+    <script src="/assets/vendor_components/datatable/datatables.min.js"></script>
 
-        <script src="js/pages/data-table.js"></script>
-    </body>
+    <!-- Joblly App -->
+    <script src="/js/template.js"></script>
+    <script src="/js/pages/dashboard.js"></script>
+    <script src="/js/pages/calendar-dash.js"></script>
+
+    <script src="js/pages/data-table.js"></script>
+  </body>
 </html>

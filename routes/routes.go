@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/session"
 	"github.com/patelajay745/ApplicationStation/controllers"
@@ -21,16 +23,20 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 	})
 
 	app.Get("/login", func(c fiber.Ctx) error {
-		success := c.Query("success")
-		error := c.Query("error")
-		var errorMsg string
-		if error == "wrong_credentials" {
-			errorMsg = "Email or Password is wrong"
-		}
 
-		return c.Render("layout/login", fiber.Map{
-			"Success": success, "error": errorMsg,
-		})
+		message := c.Redirect().Message("status")
+
+		if len(message) > 0 {
+			fmt.Println("Sucees")
+			return c.Render("layout/login", fiber.Map{
+				"Success": message,
+			})
+		} else {
+			fmt.Println("error")
+			return c.Render("layout/login", fiber.Map{
+				"Error": "An error occurred. Please try again.",
+			})
+		}
 	})
 
 	app.Post("/login", func(c fiber.Ctx) error {
@@ -63,6 +69,13 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 		// if sess.Get("authenticated") != true {
 		// 	return c.Redirect("/login")
 		// }
+
+		message := c.Redirect().Message("status")
+
+		if len(message) > 0 {
+			return c.Render("layout/dashboard", fiber.Map{"message": message}, "layout/main")
+		}
+
 		return c.Render("layout/dashboard", fiber.Map{}, "layout/main")
 	})
 	// Add Application form route

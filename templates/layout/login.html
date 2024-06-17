@@ -28,13 +28,13 @@
                         <div class="bg-white rounded10 shadow-lg">
                             <!-- Alert message -->
                             {{ if .Success }}
-                            <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 0;">
+                            <div id="myalert" class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 0;">
                                 Registration successful! You can now log in.
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                             {{ end }}
-							{{ if .error }}
-							<div class="alert alert-danger alert-dismissible fade show" role="alert" style="border-radius: 0;">
+							{{ if .Error }}
+							<div  id="myalert" class="alert alert-danger alert-dismissible fade show" role="alert" style="border-radius: 0;">
 								{{ .error }}
 								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 							</div>

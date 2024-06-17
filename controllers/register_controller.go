@@ -13,9 +13,8 @@ import (
 func RegisterPutHandler(c fiber.Ctx, db *gorm.DB) error {
 	var newUser models.User
 
-	
-	if err := c.JSON(&newUser); err != nil {
-		return err
+	if err := c.Bind().Body(&newUser); err != nil {
+		return c.Status(fiber.StatusBadRequest).SendString("Failed to parse request body")
 	}
 
 	var exisitingUser models.User
@@ -29,7 +28,7 @@ func RegisterPutHandler(c fiber.Ctx, db *gorm.DB) error {
 		return err
 	}
 
-	return c.Redirect().To("/login?success=true")
+	return c.Redirect().With("status", "Login Success").To("/login")
 }
 
 func LoginPutHandler(c fiber.Ctx, db *gorm.DB, store *session.Store) error {
@@ -52,7 +51,7 @@ func LoginPutHandler(c fiber.Ctx, db *gorm.DB, store *session.Store) error {
 	if !utils.CheckPasswordHash(userInput.Password, existingUser.Password) {
 		// Redirect to login with error message if password is incorrect
 		fmt.Println("password not match")
-		return c.Redirect().To("/login?error=wrong_credentials" )
+		return c.Redirect().To("/login?error=wrong_credentials")
 
 	}
 

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/gofiber/fiber/v3"
@@ -14,11 +13,9 @@ func AddApplicationHandler(c fiber.Ctx, db *gorm.DB, store *session.Store) error
 
 	var application models.Application
 
-	if err := c.JSON(&application); err != nil {
+	if err := c.Bind().Body(&application); err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString(("Failed to parse request body"))
 	}
-
-	fmt.Println(application.WorkType)
 	application.AppliedDate = time.Now()
 	application.Status = "Pending"
 
@@ -27,5 +24,5 @@ func AddApplicationHandler(c fiber.Ctx, db *gorm.DB, store *session.Store) error
 	}
 
 	// return c.Redirect("/dashboard", fiber.StatusSeeOther)
-	return c.Redirect().With("status", "Application Added").To("/dashboard")
+	return c.Redirect().With("status","added").To("/dashboard")
 }

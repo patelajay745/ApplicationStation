@@ -28,7 +28,7 @@ func RegisterPutHandler(c fiber.Ctx, db *gorm.DB) error {
 		return err
 	}
 
-	return c.Redirect().With("status", "Login Success").To("/login")
+	return c.Redirect().With("rstatus", "Register in successfully").To("/login")
 }
 
 func LoginPutHandler(c fiber.Ctx, db *gorm.DB, store *session.Store) error {

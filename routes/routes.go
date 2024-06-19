@@ -24,7 +24,9 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 
 	app.Get("/login", func(c fiber.Ctx) error {
 
-		message := c.Redirect().Message("status")
+		message := c.Redirect().Message("rstatus")
+
+		fmt.Println("message:", message)
 
 		if len(message) > 0 {
 			fmt.Println("Sucees")
@@ -32,10 +34,7 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 				"Success": message,
 			})
 		} else {
-			fmt.Println("error")
-			return c.Render("layout/login", fiber.Map{
-				"Error": "An error occurred. Please try again.",
-			})
+			return c.Render("layout/login", fiber.Map{})
 		}
 	})
 
@@ -70,11 +69,12 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 		// 	return c.Redirect("/login")
 		// }
 
-		message := c.Redirect().Message("status")
+		
+		fmt.Println("message: ", c.Redirect().Messages())
 
-		if len(message) > 0 {
-			return c.Render("layout/dashboard", fiber.Map{"message": message}, "layout/main")
-		}
+		// if len(message) > 0 {
+		// 	return c.Render("layout/dashboard", fiber.Map{"message": message}, "layout/main")
+		// }
 
 		return c.Render("layout/dashboard", fiber.Map{}, "layout/main")
 	})

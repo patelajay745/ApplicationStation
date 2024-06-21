@@ -1,0 +1,99 @@
+{{template "partials/header" .}} {{template "partials/main_sidebar" .}}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <div class="container-full">
+    <div class="container-full">
+      <section class="content">
+        <div class="row">
+          {{ if .message}}
+          <div class="col-12" id="myalert">
+            <div class="box">
+              <div class="box-body">
+                <div class="alert alert-success" role="alert">
+                  This is a primary alert—check it out!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {{ end }}
+
+          <div class="col-12">
+            <div class="box">
+              <div class="box-body">
+                <div class="table-responsive">
+                  <table id="example" class="table mb-0 w-p100">
+                    <thead>
+                      <tr>
+                        <th>#ID</th>
+                        <th>Name</th>
+                        <th>Applied Date</th>
+                        <th>Company</th>
+                        <th>Type</th>
+                        <th>Postition</th>
+                        <th>Contact</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>001457</td>
+                        <td>Johen Doe</td>
+                        <td>14 Nov 2020</td>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <div
+                              class="me-25 h-60 w-60 rounded text-center b-1"
+                            >
+                              <img
+                                src="../images/logo/logo-1.jpg"
+                                class="align-self-center"
+                                alt=""
+                              />
+                            </div>
+                            <span class="text-fade fw-600 fs-16">
+                              Google Inc.
+                              <br />
+                              <small>Miami</small>
+                            </span>
+                          </div>
+                        </td>
+                        <td>Full Time</td>
+                        <td>Project Manager</td>
+                        <td>
+                          <div class="d-flex align-items-center gap-items-2">
+                            <a
+                              href="#"
+                              class="waves-effect waves-circle btn btn-circle btn-success btn-xs"
+                            >
+                              <i class="mdi mdi-phone"></i>
+                            </a>
+                            <a
+                              href="#"
+                              class="waves-effect waves-circle btn btn-circle btn-warning btn-xs"
+                            >
+                              <i class="mdi mdi-email"></i>
+                            </a>
+                          </div>
+                        </td>
+                        <td>
+                          <span class="badge badge-secondary-light">
+                            Pending
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- /.box-body -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+{{template "partials/footer" .}}

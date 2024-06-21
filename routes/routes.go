@@ -2,6 +2,7 @@ package routes
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/gofiber/fiber/v3"
 	"github.com/gofiber/fiber/v3/middleware/session"
@@ -11,6 +12,11 @@ import (
 
 // SetupRoutes initializes all routes for the application
 func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
+
+	app.Post("/register", func(c fiber.Ctx) error {
+		return controllers.RegisterPutHandler(c, db)
+	})
+
 	app.Get("/register", func(c fiber.Ctx) error {
 		errorMessage := c.Query(("error"))
 		var errorMsg string
@@ -24,14 +30,15 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 
 	app.Get("/login", func(c fiber.Ctx) error {
 
-		message := c.Redirect().Message("rstatus")
+		status := c.Query("status")
 
-		fmt.Println("message:", message)
-
-		if len(message) > 0 {
-			fmt.Println("Sucees")
+		if status == "registered" {
 			return c.Render("layout/login", fiber.Map{
-				"Success": message,
+				"status": strings.Title(strings.Replace(status, "_", " ", 1)),
+			})
+		} else if status == "wrong_email" || status == "wrong_password" {
+			return c.Render("layout/login", fiber.Map{
+				"error": strings.Title(strings.Replace(status, "_", " ", 1)),
 			})
 		} else {
 			return c.Render("layout/login", fiber.Map{})
@@ -42,10 +49,6 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 
 		return controllers.LoginPutHandler(c, db, store)
 
-	})
-
-	app.Post("/register", func(c fiber.Ctx) error {
-		return controllers.RegisterPutHandler(c, db)
 	})
 
 	app.Get("/logout", func(c fiber.Ctx) error {
@@ -68,17 +71,9 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 		// if sess.Get("authenticated") != true {
 		// 	return c.Redirect("/login")
 		// }
-
-		
-		fmt.Println("message: ", c.Redirect().Messages())
-
-		// if len(message) > 0 {
-		// 	return c.Render("layout/dashboard", fiber.Map{"message": message}, "layout/main")
-		// }
-
 		return c.Render("layout/dashboard", fiber.Map{}, "layout/main")
 	})
-	// Add Application form route
+
 	app.Get("/add_application", func(c fiber.Ctx) error {
 		return c.Render("layout/add_application", fiber.Map{
 			"Title": "Add Application | Job Application Tracker",
@@ -88,5 +83,12 @@ func SetupRoutes(app *fiber.App, db *gorm.DB, store *session.Store) {
 	app.Post("/add_application", func(c fiber.Ctx) error {
 
 		return controllers.AddApplicationHandler(c, db, store)
+	})
+
+	app.Get("/show_application", func(c fiber.Ctx) error {
+		fmt.Println("show application")
+		return c.Render("layout/show_application", fiber.Map{
+			"Title": "Show Application | Job Application Tracker",
+		}, "layout/main")
 	})
 }

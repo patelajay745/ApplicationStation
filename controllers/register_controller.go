@@ -23,35 +23,29 @@ func RegisterPutHandler(c fiber.Ctx, db *gorm.DB) error {
 	}
 
 	newUser.Password, _ = utils.HashPassword(newUser.Password)
+	newUser.Status = "notActive"
 
 	if err := db.Create(&newUser).Error; err != nil {
 		return err
 	}
 
-	return c.Redirect().With("rstatus", "Register in successfully").To("/login")
+	return c.Redirect().To("/login?status=registered")
 }
 
 func LoginPutHandler(c fiber.Ctx, db *gorm.DB, store *session.Store) error {
 	var userInput models.User
 	var existingUser models.User
 
-	if err := c.JSON(&userInput); err != nil {
+	if err := c.Bind().Body(&userInput); err != nil {
 		return c.Status(fiber.StatusBadRequest).SendString("Failed to parse request body")
 	}
 
-	// Find user by email
 	if err := db.Where("email = ?", userInput.Email).First(&existingUser).Error; err != nil {
-		// Redirect to login with error message if user not found
-		fmt.Println("email not found")
-		return c.Redirect().To("/login?error=wrong_credentials")
-
+		return c.Redirect().To("/login?status=wrong_email")
 	}
 
-	// Check if the password matches
 	if !utils.CheckPasswordHash(userInput.Password, existingUser.Password) {
-		// Redirect to login with error message if password is incorrect
-		fmt.Println("password not match")
-		return c.Redirect().To("/login?error=wrong_credentials")
+		return c.Redirect().To("/login?status=wrong_password")
 
 	}
 
